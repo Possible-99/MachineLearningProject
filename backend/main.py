@@ -43,7 +43,7 @@ def euclidianTableGenerator(dataTable):
     return final_euclidian_table
 
 def minkokwskiTableGenerator(dataTable):
-    minkowski_data=cdist(dataTable,dataTable, metric ="minkowski") 
+    minkowski_data=cdist(dataTable,dataTable, metric ="minkowski",p=1.5) 
     final_minkowski_table=pd.DataFrame(minkowski_data)
     return final_minkowski_table
 
@@ -63,7 +63,7 @@ def priori():
         file = request.files['file']
         data=request.form.to_dict()
         if file:
-            csvFile=pd.read_csv(file, header=None)
+            csvFile=pd.read_csv(file, header=None, error_bad_lines=False)
             # Hacemos una lista con la data
             lista=generadorLista(data=csvFile)
             #Obtenemos las reglas
@@ -81,16 +81,22 @@ def priori():
 def metricas():
      if request.method == 'POST':
         file = request.files['file']
+        extension=file.filename.split(".")[1]
         if file:
-            csvFile=pd.read_table(file) 
-            dataTable=csvFile.drop(['ID'],axis=1)
-            #Los convertimos en objetos para enviarlos al frontend
-            final_euclidian_object=euclidianTableGenerator(dataTable).to_dict()
-            final_minkoswki_object=minkokwskiTableGenerator(dataTable).to_dict()
-            final_chebyshev_object=chebyshevTableGenerator(dataTable).to_dict()
-            final_manhattan_object=manhattanTableGenerator(dataTable).to_dict()
-            distancesObject={"euclidian":final_euclidian_object,"minkowski":final_minkoswki_object,"chebyshev":final_chebyshev_object,"manhattan":final_manhattan_object}
-            return distancesObject
+            csvFile= pd.read_table(file) if extension=="txt" else pd.read_csv(file)
+            dataTable=csvFile.select_dtypes(include=['float64','int64'])
+            numberRows=len(dataTable)
+            numberColumns=len(dataTable.columns)
+            if (numberRows>1 and numberColumns>1):
+                #Los convertimos en objetos para enviarlos al frontend
+                final_euclidian_array=euclidianTableGenerator(dataTable).to_dict('records')
+                final_minkoswki_array=minkokwskiTableGenerator(dataTable).to_dict('records')
+                final_chebyshev_array=chebyshevTableGenerator(dataTable).to_dict('records')
+                final_manhattan_array=manhattanTableGenerator(dataTable).to_dict('records')
+                distancesArray={"euclidian":final_euclidian_array,"minkowski":final_minkoswki_array,"chebyshev":final_chebyshev_array,"manhattan":final_manhattan_array, "numberColumns":len(final_minkoswki_array)}
+                return distancesArray
+            return {}
+        return {}
 
 
 
