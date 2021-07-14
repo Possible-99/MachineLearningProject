@@ -2,7 +2,7 @@
   "name": "proy_ai",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://127.0.0.1:5000",
+  "proxy": "http://127.0.0.1:5000",
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@craco/craco": "^6.1.2",
@@ -10,6 +10,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.16.6",
+    "axios": "^0.21.1",
     "craco-less": "^1.18.0",
     "node-sass": "4.14.1",
     "react": "^17.0.2",

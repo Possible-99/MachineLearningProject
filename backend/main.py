@@ -1,11 +1,15 @@
-from typing import List, final
-from flask import Flask, flash, request, redirect, url_for
-from flask_restful import Api, Resource,reqparse
-from werkzeug import FileStorage,secure_filename
+from flask import Flask, request
+from flask_restful import Api
 import os
 import pandas as pd 
 from apyori import apriori
 from scipy.spatial.distance import cdist
+import numpy as np
+import json
+from sklearn.cluster import AgglomerativeClustering 
+from kneed import KneeLocator
+from sklearn.cluster import KMeans
+from sklearn.metrics import pairwise_distances_argmin_min
 
 app = Flask(__name__)
 api = Api(app)
@@ -57,6 +61,17 @@ def manhattanTableGenerator(dataTable):
     final_manhattan_table=pd.DataFrame(manhattan_data)
     return final_manhattan_table
 
+def obtainNClusters(matrix):
+    SSE = []
+    for i in range(2, 12):
+        km = KMeans(n_clusters=i, random_state=0)
+        km.fit(matrix)
+        SSE.append(km.inertia_)
+    kl = KneeLocator(range(2, 12), SSE, curve="convex", direction="decreasing")
+    nClusters=kl.elbow
+    return nClusters
+
+
 @app.route('/api/priori', methods=['POST'])
 def priori():
     if request.method == 'POST':
@@ -98,10 +113,86 @@ def metricas():
             return {}
         return {}
 
+@app.route("/api/clusteringVariables",methods=["POST"])
+def clusteringParticionalVariables():
+    if request.method == 'POST':
+        file = request.files['file']
+        extension=file.filename.split(".")[1]
+        if file:
+            csvFile= pd.read_table(file) if extension=="txt" else pd.read_csv(file)
+            dataTable=csvFile.select_dtypes(include=['float64','int64'])
+            numberRows=len(dataTable)
+            numberColumns=len(dataTable.columns)
+            if (numberRows>1 and numberColumns>1):
+                #Obtenemos la correlacion de Pearson para seleccionar las variabless
+                corrDataFrame=dataTable.corr(method="pearson")
+                firstColumnIndex=corrDataFrame.columns[0]
+                # Ordenamos las variables para escoger las mas adecuadas
+                sortedColumn=corrDataFrame[firstColumnIndex].sort_values(ascending=False)[:10]
+                corrSortedVariables=sortedColumn.to_dict()
+                fileToDict=csvFile.to_dict()
+                return {"variables":[corrSortedVariables]}
+            return {}
+        return {}
+
+@app.route("/api/clusteringJerarquico",methods=["POST"])
+def clusteringJerarquicoResultados():
+   if request.method == 'POST':
+        file = request.files["file"]
+        extension=file.filename.split(".")[1]
+        #Convertimos nuestro JSON a tipos de datos de python
+        value=json.loads(request.form["variablesSelected"])
+        #Checamos si el usuario escogio las variables o prefirio usar todas
+        variables=value
+        if file:
+            csvFile= pd.read_table(file) if extension=="txt" else pd.read_csv(file)
+            dataTable=csvFile.select_dtypes(include=['float64','int64'])
+            numberColumns=len(dataTable.columns)
+            #Procedemos a seleccionar lo que necesitamos de la tabla.
+            actualMatrix=dataTable.iloc[:, 0:numberColumns].values if variables=="all" else np.array(dataTable[variables]) 
+            #Procedemos al algoritmo de clustering jerarquico
+            MJerarquico = AgglomerativeClustering(n_clusters=5, linkage='complete', affinity='euclidean')
+            MJerarquico.fit_predict(actualMatrix)
+            csvFile["clusterH"]=MJerarquico.labels_
+            #Le damos forma a la data para enviarla al front end
+            clustersQuantity=csvFile.groupby(['clusterH'])['clusterH'].count().to_dict()
+            centroidesH = csvFile.groupby(['clusterH']).mean().to_dict("records") if value=="all" else csvFile.groupby(['clusterH'])[variables].mean().to_dict("records")
+            csvFile=csvFile.to_dict("records")
+            # Lo pasamos como string para que no ordene automaticamente las llaves
+            return {"clustersQuantity":clustersQuantity,"centroidesH":json.dumps(centroidesH),"tablaGeneral":json.dumps(csvFile)}
+        return {} 
+
+@app.route("/api/clusteringParticional",methods=["POST"])
+def clusteringParticionalResultados():
+   if request.method == 'POST':
+        file = request.files["file"]
+        extension=file.filename.split(".")[1]
+        #Convertimos nuestro JSON a tipos de datos de python
+        value=json.loads(request.form["variablesSelected"])
+        #Checamos si el usuario escogio las variables o prefirio usar todas
+        variables=value
+        if file:
+            csvFile= pd.read_table(file) if extension=="txt" else pd.read_csv(file)
+            dataTable=csvFile.select_dtypes(include=['float64','int64'])
+            numberColumns=len(dataTable.columns)
+            #Procedemos a seleccionar lo que necesitamos de la tabla.
+            actualMatrix=dataTable.iloc[:, 0:numberColumns].values if variables=="all" else np.array(dataTable[variables]) 
+            #Procedemos al algoritmo de clustering jerarquico
+            MParticional =KMeans(n_clusters=obtainNClusters(actualMatrix), random_state=0).fit(actualMatrix) 
+            MParticional.predict(actualMatrix)
+            csvFile["clusterP"]=MParticional.labels_
+            #Le damos forma a la data para enviarla al front end
+            clustersQuantity=csvFile.groupby(['clusterP'])['clusterP'].count().to_dict()
+            centroidesP=MParticional.cluster_centers_
+            centroidesPDataFrame = pd.DataFrame(centroidesP.round(2), columns=list(dataTable)) if value=="all" else pd.DataFrame(centroidesP.round(4), columns=variables)
+            centroidesPList=centroidesPDataFrame.to_dict("records")
+            csvFile=csvFile.to_dict("records")
+            # Lo pasamos como string para que no ordene automaticamente las llaves
+            return {"clustersQuantity":clustersQuantity,"centroidesH":json.dumps(centroidesPList),"tablaGeneral":json.dumps(csvFile)}
 
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-
+    app.config['JSON_SORT_KEYS'] = False
 
