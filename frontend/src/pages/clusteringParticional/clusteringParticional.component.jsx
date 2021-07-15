@@ -17,10 +17,12 @@ const ClusteringParticional = () => {
           className="site-layout-background"
           style={{ padding: 24, minHeight: 360 }}
         >
-           <ClusteringFirstPart setCorrVariables={setCorrVariables} corrVariables={corrVariables} variablesSelected={variablesSelected} setVariablesSelected={setVariablesSelected}/>
+        <h2>Sube un archivo para generar los clusters</h2>
+        <h4 style={{fontWeight:"300"}}>Suber un archivo solo con los datos necesarios(sin columnas que contengan ID,etc)</h4>
+        <ClusteringFirstPart setCorrVariables={setCorrVariables} corrVariables={corrVariables} variablesSelected={variablesSelected} setVariablesSelected={setVariablesSelected}/>
           {variablesSelected!=null &&(
             <div>
-            <ClusteringResults variablesSelected={variablesSelected} corrVariables={corrVariables} clusteringAlgorithm="Particional"/>
+            <ClusteringResults variablesSelected={variablesSelected} corrVariables={corrVariables} clusteringAlgorithm="Particional" clusterName="clusterP"/>
             </div>
           ) }
         </div>

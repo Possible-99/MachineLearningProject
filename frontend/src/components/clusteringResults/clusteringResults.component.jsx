@@ -4,8 +4,9 @@ import axios from "axios";
 import DataTable from '../dataTable/dataTable.component';
 import {columnsGenerator,columnsGeneratorWithoutIndex} from './columns';
 import { Divider, message } from 'antd';
+import ScatterGraph from '../scatterGraph/scatterGraph.component';
 
-const ClusteringResults=({variablesSelected,corrVariables,clusteringAlgorithm})=>{
+const ClusteringResults=({variablesSelected,corrVariables,clusteringAlgorithm, clusterName})=>{
     const [responseData, setResponseData] = useState(null)
     const [columns,setColumns]=useState(null)
     
@@ -46,6 +47,7 @@ const ClusteringResults=({variablesSelected,corrVariables,clusteringAlgorithm})=
                 <DataTable data={[responseData.clustersQuantity]} columns={columns.clustersQuantity} scroll={{ x: 1500}} pagination={false} size="large" tableTitle="Num. Elementos en cada cluster"/>
                 <Divider/>
                 <DataTable data={responseData.centroidesH} columns={columns.centroidesHColumns} scroll={{ x: 1500 }} pagination={false} size="large" tableTitle="Clusters"/>
+                <ScatterGraph data={responseData.tablaGeneral} clusterName={clusterName} clusters={responseData.centroidesH}/>
             </div> )}
         </div>
     )

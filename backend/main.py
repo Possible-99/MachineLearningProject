@@ -71,6 +71,12 @@ def obtainNClusters(matrix):
     nClusters=kl.elbow
     return nClusters
 
+def fillNanWithMean(table):
+    if(table.isnull().values.any()):
+        for column in table:
+            table[column].fillna((table[column].mean()), inplace=True)
+        return table
+    return table
 
 @app.route('/api/priori', methods=['POST'])
 def priori():
@@ -110,29 +116,30 @@ def metricas():
                 final_manhattan_array=manhattanTableGenerator(dataTable).to_dict('records')
                 distancesArray={"euclidian":final_euclidian_array,"minkowski":final_minkoswki_array,"chebyshev":final_chebyshev_array,"manhattan":final_manhattan_array, "numberColumns":len(final_minkoswki_array)}
                 return distancesArray
-            return {}
+            return "Record not found", 400
         return {}
 
 @app.route("/api/clusteringVariables",methods=["POST"])
-def clusteringParticionalVariables():
+def clusteringVariables():
     if request.method == 'POST':
         file = request.files['file']
         extension=file.filename.split(".")[1]
         if file:
             csvFile= pd.read_table(file) if extension=="txt" else pd.read_csv(file)
             dataTable=csvFile.select_dtypes(include=['float64','int64'])
-            numberRows=len(dataTable)
-            numberColumns=len(dataTable.columns)
+            dataTableWithoutNan=fillNanWithMean(dataTable)
+            print(dataTableWithoutNan)
+            numberRows=len(dataTableWithoutNan)
+            numberColumns=len(dataTableWithoutNan.columns)
             if (numberRows>1 and numberColumns>1):
                 #Obtenemos la correlacion de Pearson para seleccionar las variabless
-                corrDataFrame=dataTable.corr(method="pearson")
+                corrDataFrame=dataTableWithoutNan.corr(method="pearson")
                 firstColumnIndex=corrDataFrame.columns[0]
                 # Ordenamos las variables para escoger las mas adecuadas
                 sortedColumn=corrDataFrame[firstColumnIndex].sort_values(ascending=False)[:10]
                 corrSortedVariables=sortedColumn.to_dict()
-                fileToDict=csvFile.to_dict()
                 return {"variables":[corrSortedVariables]}
-            return {}
+            return "Record not found", 400
         return {}
 
 @app.route("/api/clusteringJerarquico",methods=["POST"])
@@ -145,11 +152,12 @@ def clusteringJerarquicoResultados():
         #Checamos si el usuario escogio las variables o prefirio usar todas
         variables=value
         if file:
-            csvFile= pd.read_table(file) if extension=="txt" else pd.read_csv(file)
+            csvFile= pd.read_table(file).fillna(0) if extension=="txt" else pd.read_csv(file).fillna(0)
             dataTable=csvFile.select_dtypes(include=['float64','int64'])
-            numberColumns=len(dataTable.columns)
+            dataTableWithoutNan=fillNanWithMean(dataTable)
+            numberColumns=len(dataTableWithoutNan.columns)
             #Procedemos a seleccionar lo que necesitamos de la tabla.
-            actualMatrix=dataTable.iloc[:, 0:numberColumns].values if variables=="all" else np.array(dataTable[variables]) 
+            actualMatrix=dataTableWithoutNan.iloc[:, 0:numberColumns].values if variables=="all" else np.array(dataTable[variables]) 
             #Procedemos al algoritmo de clustering jerarquico
             MJerarquico = AgglomerativeClustering(n_clusters=5, linkage='complete', affinity='euclidean')
             MJerarquico.fit_predict(actualMatrix)
@@ -172,11 +180,13 @@ def clusteringParticionalResultados():
         #Checamos si el usuario escogio las variables o prefirio usar todas
         variables=value
         if file:
-            csvFile= pd.read_table(file) if extension=="txt" else pd.read_csv(file)
+            csvFile= pd.read_table(file).fillna(0) if extension=="txt" else pd.read_csv(file).fillna(0)
             dataTable=csvFile.select_dtypes(include=['float64','int64'])
-            numberColumns=len(dataTable.columns)
+            dataTableWithoutNan=fillNanWithMean(dataTable)
+            print(dataTableWithoutNan)
+            numberColumns=len(dataTableWithoutNan.columns)
             #Procedemos a seleccionar lo que necesitamos de la tabla.
-            actualMatrix=dataTable.iloc[:, 0:numberColumns].values if variables=="all" else np.array(dataTable[variables]) 
+            actualMatrix=dataTableWithoutNan.iloc[:, 0:numberColumns].values if variables=="all" else np.array(dataTableWithoutNan[variables]) 
             #Procedemos al algoritmo de clustering jerarquico
             MParticional =KMeans(n_clusters=obtainNClusters(actualMatrix), random_state=0).fit(actualMatrix) 
             MParticional.predict(actualMatrix)
@@ -184,7 +194,7 @@ def clusteringParticionalResultados():
             #Le damos forma a la data para enviarla al front end
             clustersQuantity=csvFile.groupby(['clusterP'])['clusterP'].count().to_dict()
             centroidesP=MParticional.cluster_centers_
-            centroidesPDataFrame = pd.DataFrame(centroidesP.round(2), columns=list(dataTable)) if value=="all" else pd.DataFrame(centroidesP.round(4), columns=variables)
+            centroidesPDataFrame = pd.DataFrame(centroidesP.round(2), columns=list(dataTableWithoutNan)) if value=="all" else pd.DataFrame(centroidesP.round(4), columns=variables)
             centroidesPList=centroidesPDataFrame.to_dict("records")
             csvFile=csvFile.to_dict("records")
             # Lo pasamos como string para que no ordene automaticamente las llaves

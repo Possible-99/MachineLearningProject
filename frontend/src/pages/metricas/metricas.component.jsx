@@ -36,7 +36,7 @@ const Metricas = () => {
           setColumns(columnsSkeleton)
         }
       } else if (status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
+        message.error("Error. Suba un archivo valido");
       }
     },
     onDrop(e) {
@@ -54,14 +54,12 @@ const Metricas = () => {
           style={{ padding: 24, minHeight: 360 }}
         >
         <h2>Sube el archivo para obtener las metricas de similitud</h2>
+        <h4 style={{fontWeight:"300"}}>Suber un archivo solo con los datos necesarios(sin columnas que contengan ID,etc)</h4>
           <FileDragger {...props}/>
-          
+          <Button type="primary" style={{float:"right",margin:"10px 0",display:disabledStatus?"":"none"}} size="middle" onClick={()=>window.location.reload()} >Nuevo estudio</Button>
           
           {
             metricasData==null?null:(
-              <div>
-              <Button type="primary" style={{float:"right",margin:"10px 0"}} size="middle" onClick={()=>window.location.reload()} >Nuevo estudio</Button>
-               {
                 Object.keys(metricasData).length !== 0 && (
               <div>
                 <Divider></Divider>
@@ -74,10 +72,7 @@ const Metricas = () => {
                 <DataTable data={metricasData.manhattan} columns={columns} tableTitle={"Tabla Manhattan"} size="small" scroll={{ x: 1500}}pagination={false} />
               </div>
               )
-              }
-              </div>
             )
-            
             }
         </div>
       </Content>

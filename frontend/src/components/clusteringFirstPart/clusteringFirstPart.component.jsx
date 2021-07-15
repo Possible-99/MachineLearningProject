@@ -33,7 +33,7 @@ const ClusteringFirstPart=({setCorrVariables,corrVariables,variablesSelected,set
     
             }
           } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
+            message.error("Error. Introduzca un archivo o parametrtos validos");
           }
         }
       }; 
