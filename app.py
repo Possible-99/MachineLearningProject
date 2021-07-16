@@ -1,5 +1,6 @@
 from flask import Flask, request,send_from_directory
 from flask_restful import Api
+from flask_cors import CORS
 import pandas as pd 
 from apyori import apriori
 from scipy.spatial.distance import cdist
