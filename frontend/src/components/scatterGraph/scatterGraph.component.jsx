@@ -52,7 +52,7 @@ const ScatterGraph=({data,clusterName,clusters})=>{
             <Select defaultValue={graphVariables.xfield} style={{ width: 120 }} onChange={handleChangeX} >
                 {
                     Object.keys(data[0]).map(key=>(
-                        key===graphVariables.xfield || key===graphVariables.yfield || key=="clusterH"|| key==="clusterP"?null:(<Option value={key}>{key}</Option>)
+                        key===graphVariables.xfield || key===graphVariables.yfield || key==="clusterH"|| key==="clusterP"?null:(<Option value={key}>{key}</Option>)
                     ))
                 }
                 

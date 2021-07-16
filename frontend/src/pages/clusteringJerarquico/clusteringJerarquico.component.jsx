@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import "./clusteringJerarquico.styles.scss";
 import MyLayout from "../../components/layout/layout.component";
-import { Layout,message,Typography} from "antd";
+import { Layout,Typography} from "antd";
 import ClusteringFirstPart from "../../components/clusteringFirstPart/clusteringFirstPart.component";
 import ClusteringResults from "../../components/clusteringResults/clusteringResults.component";
 
@@ -15,7 +15,6 @@ const ClusteringJerarquico = () => {
 
   
   
-  console.log(corrVariables)
   return (
     <MyLayout menuKey="4" title="Clustering Jerarquico">
       <Content style={{ margin: "5px 16px 0px 16px" }}>

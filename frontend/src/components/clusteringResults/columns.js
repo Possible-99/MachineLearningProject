@@ -17,7 +17,6 @@ export const columnsGenerator=(data)=>{
 }
 
 export const columnsGeneratorWithoutIndex=(data)=>{
-    console.log(data)
     let columns=[]
     const keys=Object.keys(data[0])
     keys.forEach(item=>{

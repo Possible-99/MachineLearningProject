@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import "./metricas.styles.scss";
 import MyLayout from "../../components/layout/layout.component";
-import { Divider, Layout,message,Button, Typography,notification} from "antd";
+import { Divider, Layout,message,Button, Typography} from "antd";
 import FileDragger from "../../components/fileDragger/fileDragger.component";
 import DataTable from "../../components/dataTable/dataTable.component";
 import columnsGenerator from "../../pages/metricas/columns"
@@ -41,11 +41,9 @@ const Metricas = () => {
       }
     },
     onDrop(e) {
-      // console.log('Dropped files', e.dataTransfer.files);
     },
   }; 
 
-  console.log(metricasData)
 
   return (
     <MyLayout menuKey="3" title="Metricas">

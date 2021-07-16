@@ -10,7 +10,6 @@ const SelectVariables=({text,state,setVariablesSelected,data,loading,setLoading}
     
     const handleChange = selectedItems => {
         setItems({ selectedItems });
-        console.log(selectedItems)
       };
 
     useEffect(() => {
@@ -29,7 +28,6 @@ const SelectVariables=({text,state,setVariablesSelected,data,loading,setLoading}
     const filteredOptions = OPTIONS.filter(o => !selectedItems.includes(o));
     const disabled=selectedItems.length===6?true:false || items.allVariables===true?true:false
 
-    console.log(items)
     return(
        
         <div>

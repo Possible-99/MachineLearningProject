@@ -27,8 +27,6 @@ const ClusteringFirstPart=({setCorrVariables,corrVariables,variablesSelected,set
             }
             else{
               message.success(`Se completo exitosamente`)
-              console.log("===========")
-              console.log(info)
               setCorrVariables({file:info.file.originFileObj,variables:info.file.response.variables})
     
             }

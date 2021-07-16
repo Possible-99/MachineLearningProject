@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Layout, Menu, Table } from "antd";
-import { PageHeader, Button } from "antd";
+import { Layout, Menu } from "antd";
+import { PageHeader } from "antd";
 import { BellFilled, BulbFilled, GithubFilled } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import {
@@ -13,7 +13,7 @@ import {
 
 import "./layout.styles.scss";
 
-const { Header, Footer, Sider } = Layout;
+const {  Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 const MyLayout = ({ children, menuKey, title }) => {
@@ -28,8 +28,7 @@ const MyLayout = ({ children, menuKey, title }) => {
   let history = useHistory();
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-        <div className="logo" />
+      <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} >
         <Menu theme="dark" defaultSelectedKeys={[menuKey]} mode="inline">
           <Menu.Item key="1" icon={<HomeOutlined />}>
             <Link to="/dashboard" style={{ color: "white" }}>

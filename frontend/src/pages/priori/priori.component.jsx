@@ -49,7 +49,6 @@ const Priori = () => {
       }
     },
     onDrop(e) {
-      // console.log('Dropped files', e.dataTransfer.files);
     },
   };
 
