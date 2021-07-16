@@ -6,5 +6,3 @@ files = {'file': open('../store_data.csv', 'rb')}
 
 
 r = requests.post(BASE + "api/priori", files=files)
-
-print(r.text)

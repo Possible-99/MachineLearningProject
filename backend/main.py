@@ -95,7 +95,6 @@ def priori():
             results=aprioriAlgo(lista,minSupport,minConfidence,minLift,minLength)
             #Le damos forma de objeto
             resultsObject=generadorObjetoRes(results)
-            print(resultsObject)
             return resultsObject
 
 @app.route('/api/metricas', methods=['POST'])
@@ -128,7 +127,6 @@ def clusteringVariables():
             csvFile= pd.read_table(file) if extension=="txt" else pd.read_csv(file)
             dataTable=csvFile.select_dtypes(include=['float64','int64'])
             dataTableWithoutNan=fillNanWithMean(dataTable)
-            print(dataTableWithoutNan)
             numberRows=len(dataTableWithoutNan)
             numberColumns=len(dataTableWithoutNan.columns)
             if (numberRows>1 and numberColumns>1):
@@ -183,7 +181,6 @@ def clusteringParticionalResultados():
             csvFile= pd.read_table(file).fillna(0) if extension=="txt" else pd.read_csv(file).fillna(0)
             dataTable=csvFile.select_dtypes(include=['float64','int64'])
             dataTableWithoutNan=fillNanWithMean(dataTable)
-            print(dataTableWithoutNan)
             numberColumns=len(dataTableWithoutNan.columns)
             #Procedemos a seleccionar lo que necesitamos de la tabla.
             actualMatrix=dataTableWithoutNan.iloc[:, 0:numberColumns].values if variables=="all" else np.array(dataTableWithoutNan[variables]) 
