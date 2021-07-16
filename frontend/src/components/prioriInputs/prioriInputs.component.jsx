@@ -8,7 +8,7 @@ const PrioriInputs=({state,setState,disabled})=>{
     return(
         <div>
         <Title level={3}>Introduce los datos para generar las reglas</Title>
-        <h4 style={{fontWeight:"300"}}>Introduce paramtros validos para obtener los mejores resultados, para subir el archivo introduce los parametros.
+        <h4 style={{fontWeight:"300"}}>Introduce parámetros validos para obtener los mejores resultados, para subir el archivo introduce los parámetros.
         </h4>
           <Row>
             <Col xs={24} sm={8} md={8} lg={6} xl={6}>

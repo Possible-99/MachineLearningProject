@@ -42,12 +42,12 @@ const MyLayout = ({ children, menuKey, title }) => {
           </Menu.Item>
           <Menu.Item key="3" icon={<ColumnWidthOutlined />}>
             <Link to="/metricas" style={{ color: "white" }}>
-              Metricas S.
+            Métricas S.
             </Link>
           </Menu.Item>
           <SubMenu key="sub2" icon={<DotChartOutlined />} title="Clustering">
             <Menu.Item key="4">
-              <Link to="/clustering-jerarquico">Jerarquico</Link>
+              <Link to="/clustering-jerarquico">Jerárquico</Link>
             </Menu.Item>
             <Menu.Item key="5">
               <Link to="/clustering-particional">Particional</Link>

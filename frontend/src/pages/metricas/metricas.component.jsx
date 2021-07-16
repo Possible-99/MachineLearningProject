@@ -46,14 +46,14 @@ const Metricas = () => {
 
 
   return (
-    <MyLayout menuKey="3" title="Metricas">
+    <MyLayout menuKey="3" title="Métricas">
       <Content style={{ margin: "5px 16px 0px 16px" }}>
         <div
           className="site-layout-background"
           style={{ padding: 24, minHeight: 360 }}
         >
         <Title level={3}>Sube el archivo para obtener las metricas de similitud</Title>
-        <h4 style={{fontWeight:"300"}}>Suber un archivo solo con los datos necesarios(sin columnas que contengan ID,etc)</h4>
+        <h4 style={{fontWeight:"300"}}>Arrastra un archivo solo con los datos necesarios(sin columnas que contengan ID,etc)</h4>
           <FileDragger {...props}/>
           <Button type="primary" style={{float:"right",margin:"10px 0",display:disabledStatus?"":"none"}} size="middle" onClick={()=>window.location.reload()} >Nuevo estudio</Button>
           

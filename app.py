@@ -1,6 +1,4 @@
-from flask import Flask, request,send_from_directory
-from flask_restful import Api
-from flask_cors import CORS
+from flask import Flask, request
 import pandas as pd 
 from apyori import apriori
 from scipy.spatial.distance import cdist
@@ -10,8 +8,8 @@ from sklearn.cluster import AgglomerativeClustering
 from kneed import KneeLocator
 from sklearn.cluster import KMeans
 
-app = Flask(__name__, static_url_path='', static_folder='frontend/build')
-api = Api(app)
+app = Flask(__name__,static_folder="frontend/build",static_url_path="/")
+
 
 #apriori funcitons
 
@@ -77,10 +75,15 @@ def fillNanWithMean(table):
         return table
     return table
 
-@app.route("/", defaults={'path':''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return send_from_directory(app.static_folder,'index.html')
+
+@app.route("/")
+@app.route('/priori')
+@app.route('/metricas')
+@app.route('/clustering-jerarquico')
+@app.route('/clustering-particional')
+def index():
+    return app.send_static_file("index.html")
+
 
 @app.route('/api/priori', methods=['POST'])
 def priori():
@@ -200,8 +203,6 @@ def clusteringParticionalResultados():
             csvFile=csvFile.to_dict("records")
             # Lo pasamos como string para que no ordene automaticamente las llaves
             return {"clustersQuantity":clustersQuantity,"centroidesH":json.dumps(centroidesPList),"tablaGeneral":json.dumps(csvFile)}
-
-
 
 
 
