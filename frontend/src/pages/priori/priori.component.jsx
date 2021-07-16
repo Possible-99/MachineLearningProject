@@ -65,7 +65,7 @@ const Priori = () => {
           style={{ padding: 24, minHeight: 360 }}
         >
           <PrioriInputs state={state} setState={setState} disabled={disabledStatus}/>
-          <Divider>Para subir el archivo primero completa los campos anteriores</Divider>
+          <Divider/>
           <FileDragger {...props} />
           <Divider></Divider>
           {prioriData==null? null:(<div>

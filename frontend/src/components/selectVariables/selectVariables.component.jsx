@@ -4,7 +4,7 @@ import { Divider, Select,Button } from 'antd';
 
 
 
-const SelectVariables=({text,state,setVariablesSelected,data})=>{
+const SelectVariables=({text,state,setVariablesSelected,data,loading,setLoading})=>{
     const OPTIONS = data;
     const [items, setItems] = useState({"selectedItems": [],allVariables:false})
     
@@ -22,6 +22,7 @@ const SelectVariables=({text,state,setVariablesSelected,data})=>{
     const handleClick=()=>{
         setItems({...items,allVariables:true})
         setVariablesSelected("all")
+        setLoading(true)
     }
 
     const { selectedItems } = items;
@@ -40,6 +41,7 @@ const SelectVariables=({text,state,setVariablesSelected,data})=>{
             value={selectedItems}
             onChange={handleChange}
             style={{ width: '100%' }}
+            loading={loading}
             disabled={disabled}
             >
                 {filteredOptions.map(item => (
@@ -50,7 +52,7 @@ const SelectVariables=({text,state,setVariablesSelected,data})=>{
             </Select>
             <Divider/>
             <h3>Ó selecciona todas las variables en la tabla</h3>
-            <Button type="primary" onClick={handleClick} disabled={disabled}>Todas</Button>
+            <Button type="primary" loading={loading} onClick={handleClick} disabled={disabled} >Todas</Button>
         </div>
     )
 }

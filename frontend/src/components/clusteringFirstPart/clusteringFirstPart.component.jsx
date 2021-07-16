@@ -7,7 +7,7 @@ import SelectVariables from "../../components/selectVariables/selectVariables.co
 
 
 
-const ClusteringFirstPart=({setCorrVariables,corrVariables,variablesSelected,setVariablesSelected})=>{
+const ClusteringFirstPart=({setCorrVariables,corrVariables,variablesSelected,setVariablesSelected,setLoading,loading})=>{
     const [disabledStatus, setDisabledStatus] = useState(false)
     const props = {
         name: 'file',
@@ -41,13 +41,13 @@ const ClusteringFirstPart=({setCorrVariables,corrVariables,variablesSelected,set
     return(
         <div>
         <FileDragger {...props}/>
-          <Button type="primary" style={{float:"right",display:disabledStatus?"":"none"}} onClick={()=>window.location.reload()}>Otro estudio</Button>
+          <Button type="primary" style={{float:"right",margin:"10px 0",display:disabledStatus?"":"none"}} onClick={()=>window.location.reload()}>Otro estudio</Button>
           {
             corrVariables!==null && (
             <div>
               <Divider/> 
               <DataTable columns={columns} data={fixData(corrVariables.variables[0]).fixedData} tableTitle="Correlacion de Variables" pagination={false}/>
-              <SelectVariables state={variablesSelected} setVariablesSelected={setVariablesSelected} text="Selecciona cinco variables o usa todas las variables de tu tabla" data={fixData(corrVariables.variables[0]).variables}/>
+              <SelectVariables state={variablesSelected} setVariablesSelected={setVariablesSelected} text="Selecciona cinco variables o usa todas las variables de tu tabla" data={fixData(corrVariables.variables[0]).variables} setLoading={setLoading} loading={loading}/>
             </div>)
           }
           </div>

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Table } from "antd";
 import { PageHeader, Button } from "antd";
-import { BellFilled, BulbFilled } from "@ant-design/icons";
+import { BellFilled, BulbFilled, GithubFilled } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 import {
-  DesktopOutlined,
-  PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined,
+  TableOutlined,
+  HomeOutlined,
+  ColumnWidthOutlined,
+  DotChartOutlined,
 } from "@ant-design/icons";
 
 import "./layout.styles.scss";
@@ -25,27 +25,28 @@ const MyLayout = ({ children, menuKey, title }) => {
     setCollapsed({ collapsed: !collapsed });
   };
   const { collapsed } = isCollapsed;
+  let history = useHistory();
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={[menuKey]} mode="inline">
-          <Menu.Item key="1" icon={<PieChartOutlined />}>
+          <Menu.Item key="1" icon={<HomeOutlined />}>
             <Link to="/dashboard" style={{ color: "white" }}>
               Home
             </Link>
           </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
+          <Menu.Item key="2" icon={<TableOutlined />}>
             <Link to="/dashboard/priori" style={{ color: "white" }}>
               A priori
             </Link>
           </Menu.Item>
-          <Menu.Item key="3" icon={<DesktopOutlined />}>
+          <Menu.Item key="3" icon={<ColumnWidthOutlined />}>
             <Link to="/dashboard/metricas" style={{ color: "white" }}>
               Metricas S.
             </Link>
           </Menu.Item>
-          <SubMenu key="sub2" icon={<TeamOutlined />} title="Clustering">
+          <SubMenu key="sub2" icon={<DotChartOutlined />} title="Clustering">
             <Menu.Item key="4">
               <Link to="/dashboard/clustering-jerarquico">Jerarquico</Link>
             </Menu.Item>
@@ -53,28 +54,27 @@ const MyLayout = ({ children, menuKey, title }) => {
               <Link to="/dashboard/clustering-particional">Particional</Link>
             </Menu.Item>
           </SubMenu>
-          <Menu.Item key="6" icon={<FileOutlined />}>
-            Files
-          </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout">
         <PageHeader
           className="site-page-header"
-          onBack={() => null}
+          onBack={history.goBack}
           title={title}
           ghost={false}
-          extra={[
-            <BulbFilled style={{ cursor: "pointer" }} />,
-            <BellFilled style={{ cursor: "pointer" }} />,
-            <Button key="1" type="primary">
-              Primary
-            </Button>,
-          ]}
+          // extra={[
+          //   <BulbFilled style={{ cursor: "pointer" }} />,
+          //   <BellFilled style={{ cursor: "pointer" }} />,
+          //   <Button key="1" type="primary">
+          //     Primary
+          //   </Button>,
+          // ]}
         />
         {children}
         <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
+          <a href="https://github.com/Possible-99" id="gitHubLink">
+            Created by Juan SR  <GithubFilled style={{fontSize:"1.5em",margin:"0 0 0 4px"}}/>
+          </a>
         </Footer>
       </Layout>
     </Layout>

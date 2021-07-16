@@ -6,7 +6,7 @@ import {columnsGenerator,columnsGeneratorWithoutIndex} from './columns';
 import { Divider, message } from 'antd';
 import ScatterGraph from '../scatterGraph/scatterGraph.component';
 
-const ClusteringResults=({variablesSelected,corrVariables,clusteringAlgorithm, clusterName})=>{
+const ClusteringResults=({variablesSelected,corrVariables,clusteringAlgorithm, clusterName,setLoading})=>{
     const [responseData, setResponseData] = useState(null)
     const [columns,setColumns]=useState(null)
     
@@ -22,8 +22,12 @@ const ClusteringResults=({variablesSelected,corrVariables,clusteringAlgorithm, c
         axios.post(url,file,{headers: {'Content-Type': 'multipart/form-data'}}).then(response=>{
             const dataWithoutJson={clustersQuantity:response.data.clustersQuantity,centroidesH:JSON.parse(response.data.centroidesH),tablaGeneral:JSON.parse(response.data.tablaGeneral)}
             setResponseData(dataWithoutJson)
+            setLoading(false)
         })
-        .catch(error=>message.error("Hubo un error, intentalo de nuevo"))
+        .catch(error=>{
+            message.error("Hubo un error, intentalo de nuevo")
+            setLoading(false)
+        })
 
     }, [])
 

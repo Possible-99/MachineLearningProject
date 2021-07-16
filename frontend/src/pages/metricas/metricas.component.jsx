@@ -1,11 +1,12 @@
 import React,{useState} from "react";
 import "./metricas.styles.scss";
 import MyLayout from "../../components/layout/layout.component";
-import { Divider, Layout,message,Button } from "antd";
+import { Divider, Layout,message,Button, Typography,notification} from "antd";
 import FileDragger from "../../components/fileDragger/fileDragger.component";
 import DataTable from "../../components/dataTable/dataTable.component";
 import columnsGenerator from "../../pages/metricas/columns"
 const { Content } = Layout;
+const {Title}=Typography
 
 const Metricas = () => {
 
@@ -53,7 +54,7 @@ const Metricas = () => {
           className="site-layout-background"
           style={{ padding: 24, minHeight: 360 }}
         >
-        <h2>Sube el archivo para obtener las metricas de similitud</h2>
+        <Title level={3}>Sube el archivo para obtener las metricas de similitud</Title>
         <h4 style={{fontWeight:"300"}}>Suber un archivo solo con los datos necesarios(sin columnas que contengan ID,etc)</h4>
           <FileDragger {...props}/>
           <Button type="primary" style={{float:"right",margin:"10px 0",display:disabledStatus?"":"none"}} size="middle" onClick={()=>window.location.reload()} >Nuevo estudio</Button>
