@@ -15,6 +15,7 @@ const SelectVariables=({text,state,setVariablesSelected,data,loading,setLoading}
     useEffect(() => {
         if (items.selectedItems.length===6){
             setVariablesSelected(items.selectedItems)
+            setLoading(true)
         }
     }, [items])
     
@@ -32,7 +33,7 @@ const SelectVariables=({text,state,setVariablesSelected,data,loading,setLoading}
        
         <div>
          <Divider/>
-            <h3>Selecciona solo 5 variables</h3>
+            <h3>Selecciona solo 6 variables</h3>
             <Select
             showArrow
             mode="multiple"

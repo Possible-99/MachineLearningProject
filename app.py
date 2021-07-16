@@ -1,6 +1,4 @@
 from flask import Flask, request
-from flask_restful import Api
-import os
 import pandas as pd 
 from apyori import apriori
 from scipy.spatial.distance import cdist
@@ -9,10 +7,9 @@ import json
 from sklearn.cluster import AgglomerativeClustering 
 from kneed import KneeLocator
 from sklearn.cluster import KMeans
-from sklearn.metrics import pairwise_distances_argmin_min
 
-app = Flask(__name__)
-api = Api(app)
+app = Flask(__name__,static_folder="frontend/build",static_url_path="/")
+
 
 #apriori funcitons
 
@@ -77,6 +74,16 @@ def fillNanWithMean(table):
             table[column].fillna((table[column].mean()), inplace=True)
         return table
     return table
+
+
+@app.route("/")
+@app.route('/priori')
+@app.route('/metricas')
+@app.route('/clustering-jerarquico')
+@app.route('/clustering-particional')
+def index():
+    return app.send_static_file("index.html")
+
 
 @app.route('/api/priori', methods=['POST'])
 def priori():
@@ -198,8 +205,4 @@ def clusteringParticionalResultados():
             return {"clustersQuantity":clustersQuantity,"centroidesH":json.dumps(centroidesPList),"tablaGeneral":json.dumps(csvFile)}
 
 
-
-if __name__ == "__main__":
-    app.run(debug=True)
-    app.config['JSON_SORT_KEYS'] = False
 

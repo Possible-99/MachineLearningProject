@@ -20,7 +20,7 @@ const Dashboard = () => {
         >
           <DashboardAlgoButtons/>
           <Divider/>
-          <HowToSection title="Como usar cada algoritmo" tabNames={["A priori","Metricas de similitud","Clustering"]}/>
+          <HowToSection title="Como usar cada algoritmo" tabNames={["A priori","Métricas de similitud","Clustering"]}/>
 
         </div>
       </Content>

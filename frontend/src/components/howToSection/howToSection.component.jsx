@@ -61,13 +61,12 @@ const HowToSection=({title,tabNames})=>{
             <Tabs defaultActiveKey="1" >
                 <TabPane tab={tabNames[0]} key="1">
                 <Paragraph>
-                    Para usar este algoritmo suber un archivo y parametros(lift,confianza,etc) tomando en cuenta que tiene que cumplir con las siguientes caracteriscticas
-                    para obtener los mejores resultados posibles.
+                Para usar este algoritmo sube un archivo y parámetros(lift, confianza,etc) tomando en cuenta que tiene que cumplir con las siguientes características para obtener los mejores resultados posibles. 
                     <ul>
-                        <li>Subirlo de preferencia en formato CSV(solo se pueden subir archiovs CSV o TXT)</li>
+                        <li>Subirlo de preferencia en formato CSV(solo se pueden subir archivos CSV o TXT)</li>
                         <li>Solo subirlo con los campos necesarios para el algoritmo</li>
                         <li>Respetar el formato establecido en la siguiente sección</li>
-                        <li>Usa parametros de acuerdo a la data que estas subiendo en el archivo </li>
+                        <li>Usa parámetros de acuerdo a la data que estas subiendo en el archivo</li>
                     </ul>
                     <Title level={3}>Formato</Title>
                 </Paragraph>
@@ -91,12 +90,11 @@ const HowToSection=({title,tabNames})=>{
                 </TabPane>
                 <TabPane tab={tabNames[1]} key="2">
                 <Paragraph>
-                    Para usar este algoritmo suber un archivo tomando en cuenta que tiene que cumplir con las siguientes caracteriscticas
-                    para obtener los mejores resultados posibles.
+                Para usar este algoritmo sube un archivo tomando en cuenta que tiene que cumplir con las siguientes características para obtener los mejores resultados posibles.
                     <ul>
-                        <li>Subirlo de preferencia en formato CSV(solo se pueden subir archiovs CSV o TXT)</li>
+                        <li>Subirlo de preferencia en formato CSV(solo se pueden subir archivos CSV o TXT)</li>
                         <li>Solo subirlo con los campos necesarios para el algoritmo</li>
-                        <li>Quitar los campos que contengan el ID(Ej:Paciente_ID,etc)</li>
+                        <li>Quitar los campos que contengan el ID(Ej:Paciente_ID, etc)</li>
                         <li>Respetar el formato establecido en la siguiente sección</li>
                     </ul>
                     <Title level={3}>Formato</Title>
@@ -121,12 +119,12 @@ const HowToSection=({title,tabNames})=>{
                 </TabPane>
                 <TabPane tab={tabNames[2]} key="3">
                 <Paragraph>
-                    Para usar este algoritmo suber un archivo tomando en cuenta que tiene que cumplir con las siguientes caracteriscticas
+                    Para usar este algoritmo sube un archivo tomando en cuenta que tiene que cumplir con las siguientes características
                     para obtener los mejores resultados posibles.
                     <ul>
-                        <li>Subirlo de preferencia en formato CSV(solo se pueden subir archiovs CSV o TXT)</li>
+                        <li>Subirlo de preferencia en formato CSV(solo se pueden subir archivos CSV o TXT)</li>
                         <li>Solo subirlo con los campos necesarios para el algoritmo</li>
-                        <li>Quitar los campos que contengan el ID(Ej:Paciente_ID,etc)</li>
+                        <li>Quitar los campos que contengan el ID(Ej:Paciente_ID, etc)</li>
                         <li>Respetar el formato establecido en la siguiente sección</li> 
                     </ul>
                     <Title level={3}>Formato</Title>

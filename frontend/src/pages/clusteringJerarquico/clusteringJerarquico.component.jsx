@@ -16,7 +16,7 @@ const ClusteringJerarquico = () => {
   
   
   return (
-    <MyLayout menuKey="4" title="Clustering Jerarquico">
+    <MyLayout menuKey="4" title="Clustering Jerárquico">
       <Content style={{ margin: "5px 16px 0px 16px" }}>
         <div
           className="site-layout-background"

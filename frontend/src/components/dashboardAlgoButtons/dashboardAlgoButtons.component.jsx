@@ -36,7 +36,7 @@ const DashboardAlgoButtons=()=>{
             >
               <Link to="/metricas">
                 <Card className="card-algorithm " hoverable>
-                  <span>Metricas de similitud</span>
+                  <span>Métricas de similitud</span>
                 </Card>
               </Link>
             </Col>
@@ -48,7 +48,7 @@ const DashboardAlgoButtons=()=>{
             >
               <Link to="/clustering-jerarquico">
                 <Card className="card-algorithm " hoverable>
-                  <span>Clustering Jerarquico</span>
+                  <span>Clustering Jerárquico</span>
                 </Card>
               </Link>
             </Col>
