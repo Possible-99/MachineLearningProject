@@ -31,26 +31,26 @@ const MyLayout = ({ children, menuKey, title }) => {
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} >
         <Menu theme="dark" defaultSelectedKeys={[menuKey]} mode="inline">
           <Menu.Item key="1" icon={<HomeOutlined />}>
-            <Link to="/dashboard" style={{ color: "white" }}>
+            <Link to="/" style={{ color: "white" }}>
               Home
             </Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<TableOutlined />}>
-            <Link to="/dashboard/priori" style={{ color: "white" }}>
+            <Link to="/priori" style={{ color: "white" }}>
               A priori
             </Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<ColumnWidthOutlined />}>
-            <Link to="/dashboard/metricas" style={{ color: "white" }}>
+            <Link to="/metricas" style={{ color: "white" }}>
               Metricas S.
             </Link>
           </Menu.Item>
           <SubMenu key="sub2" icon={<DotChartOutlined />} title="Clustering">
             <Menu.Item key="4">
-              <Link to="/dashboard/clustering-jerarquico">Jerarquico</Link>
+              <Link to="/clustering-jerarquico">Jerarquico</Link>
             </Menu.Item>
             <Menu.Item key="5">
-              <Link to="/dashboard/clustering-particional">Particional</Link>
+              <Link to="/clustering-particional">Particional</Link>
             </Menu.Item>
           </SubMenu>
         </Menu>

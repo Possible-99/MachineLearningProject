@@ -22,7 +22,7 @@ const DashboardAlgoButtons=()=>{
               sm={{ span: 24 }}
               xs={{ span: 24 }}
             >
-              <Link to="/dashboard/priori">
+              <Link to="/priori">
                 <Card className="card-algorithm " hoverable>
                   <span>Algoritmo a priori</span>
                 </Card>
@@ -34,7 +34,7 @@ const DashboardAlgoButtons=()=>{
               sm={{ span: 24 }}
               xs={{ span: 24 }}
             >
-              <Link to="/dashboard/metricas">
+              <Link to="/metricas">
                 <Card className="card-algorithm " hoverable>
                   <span>Metricas de similitud</span>
                 </Card>
@@ -46,7 +46,7 @@ const DashboardAlgoButtons=()=>{
               sm={{ span: 24 }}
               xs={{ span: 24 }}
             >
-              <Link to="/dashboard/clustering-jerarquico">
+              <Link to="/clustering-jerarquico">
                 <Card className="card-algorithm " hoverable>
                   <span>Clustering Jerarquico</span>
                 </Card>
@@ -58,7 +58,7 @@ const DashboardAlgoButtons=()=>{
               sm={{ span: 24 }}
               xs={{ span: 24 }}
             >
-              <Link to="/dashboard/clustering-particional">
+              <Link to="/clustering-particional">
                 <Card className="card-algorithm " hoverable>
                   <span>Clustering Particional</span>
                 </Card>

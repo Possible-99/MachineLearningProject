@@ -10,18 +10,18 @@ import Metricas from './pages/metricas/metricas.component.jsx';
 import ClusteringJerarquico from './pages/clusteringJerarquico/clusteringJerarquico.component.jsx';
 import ClusteringParticiional from './pages/clusteringParticional/clusteringParticional.component.jsx';
 import './App.less';
+import NotFound from "./components/notFound/notFound.component";
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={HomePage}/>
-        <Route exact path="/dashboard" component={Dashboard}/>
-        <Route exact path="/dashboard/priori" component={Priori}/>
-        <Route exact path="/dashboard/metricas" component={Metricas}/>>
-        <Route exact path="/dashboard/clustering-jerarquico" component={ClusteringJerarquico}/>>
-        <Route exact path="/dashboard/clustering-particional" component={ClusteringParticiional}/>>
-       >
+        <Route exact path="/" component={Dashboard}/>
+        <Route exact path="/priori" component={Priori}/>
+        <Route exact path="/metricas" component={Metricas}/>
+        <Route exact path="/clustering-jerarquico" component={ClusteringJerarquico}/>
+        <Route exact path="/clustering-particional" component={ClusteringParticiional}/>
+        <Route component={NotFound} />
       </Switch>
     </Router>
    
