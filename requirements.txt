@@ -4,3 +4,4 @@ apyori
 scipy
 scikit-learn
 kneed
+gunicorn
