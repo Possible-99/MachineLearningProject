@@ -1,0 +1,6 @@
+flask
+pandas
+apyori
+scipy
+scikit-learn
+kneed

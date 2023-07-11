@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://127.0.0.1:5000",
   "dependencies": {
+    "@ant-design/charts": "^1.1.20",
     "@ant-design/icons": "^4.6.2",
     "@craco/craco": "^6.1.2",
     "@testing-library/jest-dom": "^5.11.4",
